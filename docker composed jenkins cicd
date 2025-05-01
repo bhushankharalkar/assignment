@@ -1,0 +1,500 @@
+bhushan@BHUSHAN:~$ git clone https://github.com/bjnandi/containerize-full-stack-app-MERN-with-docker-compose.git
+cd containerize-full-stack-app-MERN-with-docker-compose
+Cloning into 'containerize-full-stack-app-MERN-with-docker-compose'...
+remote: Enumerating objects: 72, done.
+remote: Counting objects: 100% (72/72), done.
+remote: Compressing objects: 100% (59/59), done.
+remote: Total 72 (delta 18), reused 51 (delta 5), pack-reused 0 (from 0)
+Receiving objects: 100% (72/72), 12.34 MiB | 843.00 KiB/s, done.
+Resolving deltas: 100% (18/18), done.
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ .
+├── client/          # React frontend
+│   ├── Dockerfile
+│   └── ...
+├── server/          # Express backend
+│   ├── Dockerfile
+│   └── ...
+├── docker-compose.yml
+└── .env             # Environment variables
+-bash: .: filename argument required
+.: usage: . filename [arguments]
+├──: command not found
+│: command not found
+│: command not found
+├──: command not found
+│: command not found
+│: command not found
+├──: command not found
+└──: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$   FROM node:14
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  RUN npm run build
+  EXPOSE 3000
+  CMD ["npm", "start"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+RUN: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$   FROM node:14
+  WORKDIR /app
+  COPY package*.json ./
+  RUN npm install
+  COPY . .
+  EXPOSE 5000
+  CMD ["npm", "start"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ version: '3.8'
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+version:: command not found
+services:: command not found
+frontend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+backend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+environment:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+mongo:: command not found
+image:: command not found
+ports:: command not found
+-: command not found
+volumes:: command not found
+-: command not found
+volumes:: command not found
+mongo-data:: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ MONGO_URI=mongodb://mongo:27017/mydatabase
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ docker-compose up --build
+Command 'docker-compose' not found, but can be installed with:
+sudo snap install docker
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ sudo snap install docker
+[sudo] password for bhushan:
+Download snap "snapd" (24505) from channel "stable"                                                                                                                                            16%  391kB/s Download snap "snapd" (24505) from channel "stable"                                                                                                                                            16%  389kB/s 2025-05-01T05:44:54Z INFO Waiting for automatic snapd restart...
+docker 27.5.1 from Canonical✓ installed
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ your-project/
+│
+├── backend/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── index.js
+│
+├── frontend/
+│   ├── Dockerfile
+│   ├── package.json
+│   └── public/
+│
+├── docker-compose.yml
+└── .env
+-bash: your-project/: No such file or directory
+│: command not found
+├──: command not found
+│: command not found
+│: command not found
+│: command not found
+│: command not found
+├──: command not found
+│: command not found
+│: command not found
+│: command not found
+│: command not found
+├──: command not found
+└──: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ # Build React app
+FROM node:18 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Serve with nginx
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+RUN: command not found
+FROM: command not found
+COPY: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["node", "index.js"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ version: "3.8"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydb
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+version:: command not found
+services:: command not found
+frontend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+backend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+environment:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+mongo:: command not found
+image:: command not found
+ports:: command not found
+-: command not found
+volumes:: command not found
+-: command not found
+volumes:: command not found
+mongo-data:: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ MONGO_URI=mongodb://mongo:27017/mydb
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ require('dotenv').config();
+const mongoUri = process.env.MONGO_URI;
+-bash: syntax error near unexpected token `'dotenv''
+const: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ docker-compose up --build
+WARN[0002] /home/bhushan/containerize-full-stack-app-MERN-with-docker-compose/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion
+unable to get image 'mongo:latest': permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get "http://%2Fvar%2Frun%2Fdocker.sock/v1.47/images/mongo:latest/json": dial unix /var/run/docker.sock: connect: permission denied
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ .Create a Jenkinsfile that will deploy the application on a remote server. So create a jenkins file that will build and deploy the application on a remote server. Both building and deployment should happen on remote server only.
+.Create: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ pipeline {
+  agent any
+
+  environment {
+    REMOTE_USER = 'ubuntu'               // Remote SSH user
+    REMOTE_HOST = 'your.remote.ip'       // Remote server IP or hostname
+    REMOTE_DIR  = '/home/ubuntu/app'     // App directory on the remote server
+  }
+
+  stages {
+    stage('Deploy to Remote') {
+      steps {
+        sshagent(['remote-server-ssh']) {
+          // Clone repo and deploy on the remote server
+          sh """
+            ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${REMOTE_HOST} << EOF
+              set -e
+              echo "[INFO] Cleaning old app directory"
+              rm -rf ${REMOTE_DIR}
+              mkdir -p ${REMOTE_DIR}
+              cd ${REMOTE_DIR}
+
+              echo "[INFO] Cloning the latest code"
+              git clone https://github.com/yourusername/yourproject.git .  # Adjust repo URL
+
+              echo "[INFO] Starting Docker Compose"
+              docker-compose down
+              docker-compose up --build -d
+            EOF
+          """
+        }
+      }
+    }
+  }
+}
+pipeline: command not found
+agent: command not found
+environment: command not found
+REMOTE_USER: command not found
+REMOTE_HOST: command not found
+REMOTE_DIR: command not found
+-bash: syntax error near unexpected token `}'
+stages: command not found
+-bash: syntax error near unexpected token `'Deploy to Remote''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+-bash: syntax error near unexpected token `['remote-server-ssh']'
+-bash: //: Is a directory
+sh: 0: cannot open
+            ssh -o StrictHostKeyChecking=no @ << EOF
+              set -e
+              echo [INFO]: No such file
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ pipeline {
+  agent any
+
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
+    IMAGE_NAME_FRONTEND = 'yourdockerhubusername/mern-frontend'
+    IMAGE_NAME_BACKEND = 'yourdockerhubusername/mern-backend'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/ameerthehacker/MERN-Todo-App.git'
+      }
+    }
+
+    stage('Build Frontend') {
+      steps {
+        dir('client') {
+          sh 'docker build -t $IMAGE_NAME_FRONTEND .'
+        }
+      }
+    }
+
+    stage('Build Backend') {
+      steps {
+        dir('server') {
+          sh 'docker build -t $IMAGE_NAME_BACKEND .'
+        }
+      }
+    }
+
+    stage('Push Images') {
+      steps {
+        withDockerRegistry([credentialsId: 'dockerhub-credentials-id', url: '']) {
+          sh 'docker push $IMAGE_NAME_FRONTEND'
+          sh 'docker push $IMAGE_NAME_BACKEND'
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh 'docker-compose down'
+        sh 'docker-compose up -d'
+      }
+    }
+  }
+}
+pipeline: command not found
+agent: command not found
+environment: command not found
+-bash: syntax error near unexpected token `('
+IMAGE_NAME_FRONTEND: command not found
+IMAGE_NAME_BACKEND: command not found
+-bash: syntax error near unexpected token `}'
+stages: command not found
+-bash: syntax error near unexpected token `'Checkout''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+git: 'https://github.com/ameerthehacker/MERN-Todo-App.git' is not a git command. See 'git --help'.
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `'Build Frontend''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+-bash: syntax error near unexpected token `'client''
+sh: 0: cannot open docker build -t $IMAGE_NAME_FRONTEND .: No such file
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `'Build Backend''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+-bash: syntax error near unexpected token `'server''
+sh: 0: cannot open docker build -t $IMAGE_NAME_BACKEND .: No such file
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `'Push Images''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+-bash: syntax error near unexpected token `[credentialsId:'
+sh: 0: cannot open docker push $IMAGE_NAME_FRONTEND: No such file
+sh: 0: cannot open docker push $IMAGE_NAME_BACKEND: No such file
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `'Deploy''
+Command 'steps' not found, did you mean:
+  command 'step' from snap step (23.08.4)
+See 'snap info <snapname>' for additional versions.
+sh: 0: cannot open docker-compose down: No such file
+sh: 0: cannot open docker-compose up -d: No such file
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+-bash: syntax error near unexpected token `}'
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ # client/Dockerfile
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+RUN: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ # server/Dockerfile
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["node", "server.js"]
+FROM: command not found
+WORKDIR: command not found
+COPY: command not found
+RUN: command not found
+COPY: command not found
+EXPOSE: command not found
+CMD: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$ version: '3.8'
+
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mernapp
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+version:: command not found
+services:: command not found
+frontend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+backend:: command not found
+build:: command not found
+ports:: command not found
+-: command not found
+environment:: command not found
+-: command not found
+depends_on:: command not found
+-: command not found
+mongo:: command not found
+image:: command not found
+ports:: command not found
+-: command not found
+volumes:: command not found
+-: command not found
+volumes:: command not found
+mongo-data:: command not found
+bhushan@BHUSHAN:~/containerize-full-stack-app-MERN-with-docker-compose$
